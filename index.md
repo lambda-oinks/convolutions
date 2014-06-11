@@ -33,21 +33,38 @@ However, this isn't the only way we could get to a total distance of 3. The ball
 In order to find the *total likelihood* of the ball reaching a total distance of $c$, we can't consider only one possible way of reaching $c$. Instead, we consider *all the possible ways* of partitioning $c$ into two drops $a$ and $b$ and sum over the *probability of each way*. 
 
 We already know that the probability for each case of $a+b=c$ is simply $f(a)*g(b)$. So, summing over every $a+b=c$, we can denote the total likelihood as:
-
 $$\sum_{a+b=c} f(a)*g(b)$$
+Turns out, we're doing a convolution! 
 
-Turns out, we're doing a convolution!
+
 
 The Definition of Convolutions
 ----
-* Discrete (a+b=c)
-* Discrete (standard)
-* Continuous
+
+Our definition of a convolution isn't the standard one. We aren't even using 'valid' summation notation. But it gets at the crux of the idea: to evaluate the convolvolution of $f$ and $g$ at $c$ (which is written $f\star g(c)$), we multiply $f$ and $g$ evaluated at $a$ and $b$ respectively, for all the cases where $a$ and $b$ sum to $c$.
+
+If we rewrite this summation using standard notation, we get the actual definition of convolution. We'll sum over $a$, and because $a+b=c \Rightarrow b=c-a$, $b$ drops out entirely: 
+$$f \star g (c) = \sum_a f(a)*g(c-a)$$
+We've only discussed discrete convolutions so far, where the possible ways of partitioning are finite. By using an integral instead, we now have the continuous version:
+$$f \star g (c) = \int f(a)g(c-a) ~da$$
+
+The convolution operation is very valuable in many applications. But before we go into more examples, let's first understand what's happening geometrically.
 
 Geometric view
 -----
-* Cross-correlations
-    * how to not get confused ($a+b=c$; $a-b=c$)
+### Cross-Correlation
+
+A similar operation to convolution that makes visualization easier is cross-correlation. But while a convolution sums over $a+b=c$, cross-correlation sums over $a-b=c$, so the discrete version is
+$$f \star g (c) = \sum_a f(a)*g(a-c)$$
+and the continuous version is
+$$f \star g (c) = \int f(a)g(a-c) ~da$$
+Cross-correlation is closely tied to convolution. Cross-correlation and convolutions are often mixed up, but we can remember which is $c-a$ and which is $a-c$ from the $a+b=c$ and $a-b=c$ understandings. 
+
+We can go between the cross-correlation and convolution operations as such:
+$$(f \star_{\text{cross}} g)(c) = (f \star_{\text{conv}} g(x \rightarrow -x))(c)$$
+
+Cross-correlation effectively flips $g$.
+
 * Animations
 
 Finding the derivative visually
