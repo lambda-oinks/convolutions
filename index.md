@@ -13,6 +13,8 @@ Let's break this down. After the first drop, it will land $a$ units away from th
 
 Now after this first drop, we pick the ball up and drop it from another height above the point where it first landed. The probability of the ball rolling $b$ units away from the new starting point is $g(b)$, where $g$ may be a different probability distribution if it's dropped from a different height.
 
+<!--FIX THIS PARAGRAPH: fix the result -> probability doesn't sound right; conditioned on it being a ??-->
+
 If we fix the result of the first drop so we know the ball went distance $a$, for the ball to go a total distance $c$, the distance travelled in the second drop is also fixed at $b$, where $a+b=c$. So the probability of this happening is simply $f(a)*g(b)$.[^expl]
 
 [^expl]: 
@@ -24,11 +26,17 @@ If we fix the result of the first drop so we know the ball went distance $a$, fo
 
     So it doesn't matter whether we think about the indepedent probability distribution $g(x)$ or the conditional distribution $g(x-a)$ because both perspectives end up evaluating to the same thing.
 
-Let's think about this with a specific discrete example. We want the total distance $c$ to be 3. The first drop, we fix the distance the ball rolled to at $a=1$, so the distance $b$ travelled the second time must be 2. The probability of this is $f(1)*g(2)$. 
+Let's think about this with a specific discrete example. We want the total distance $c$ to be 3. If the first time it rolls, $a=1$, the second time it must roll $b=2$ in order to reach our total distance $a+b=3$. The probability of this is $f(1)*g(2)$. 
 
 However, this isn't the only way we could get to a total distance of 3. The ball could roll 0 units the first time, and 3 the second. Or 2 units the first time and 1 the second. It will land at a total distance of $c$ for any $a+b=c$. 
 
-In order to find the *total likelihood* of the ball reaching a total distance of $c$, we can't consider only one possible way of reaching $c$. Instead, we partition c into *all the possible ways* of getting that distance and sum over the *probability of each way*. This is where convolutions come in.
+In order to find the *total likelihood* of the ball reaching a total distance of $c$, we can't consider only one possible way of reaching $c$. Instead, we consider *all the possible ways* of partitioning $c$ into two drops $a$ and $b$ and sum over the *probability of each way*. 
+
+We already know that the probability for each case of $a+b=c$ is simply $f(a)*g(b)$. So, summing over every $a+b=c$, we can denote the total likelihood as:
+
+$$\sum_{a+b=c} f(a)*g(b)$$
+
+Turns out, we're doing a convolution!
 
 The Definition of Convolutions
 ----
